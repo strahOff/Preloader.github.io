@@ -11,6 +11,15 @@ body {
   justify-content: center;
 }
 
+.main-preloader-container {
+  position: relative;
+  width: 320px;
+  height: 568px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .container {
   display: flex;
   background-color: #fff;
@@ -106,7 +115,7 @@ h1 {
 }
 
 .switch input:checked + .slider {
-  background: #001aff;
+  background: #58a;
 }
 
 .switch input:checked + .slider::before {
@@ -121,5 +130,13 @@ h1 {
     align-items: center;
     column-gap: 80px;
     font-size: 16px;
+  }
+  .main-preloader-container {
+    position: relative;
+    width: 568px;
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
