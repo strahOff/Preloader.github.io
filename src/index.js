@@ -1,7 +1,6 @@
 let progressInterval = null;
-let progressStartValue = 0,
-  progressEndValue = 100,
-  speed = 10;
+let progressEndValue = 100,
+  speed = 20;
 
 const container = document.createElement("div");
 container.className = "container";
@@ -17,6 +16,15 @@ const progressInput = document.createElement("input");
 progressInput.className = "field-control";
 progressInput.type = "number";
 progressInput.id = "progress-input";
+progressInput.oninput = function () {
+  if (this.value !== "") {
+    if (parseInt(this.value) > 100) {
+      this.value = 100;
+    } else if (parseInt(this.value) < 0) {
+      this.value = 0;
+    }
+  }
+};
 settingsDiv.append(progressInput);
 
 const valueLabel = document.createElement("div");
@@ -68,12 +76,11 @@ container.append(settingsDiv);
 const h1 = document.createElement("h1");
 h1.textContent = "Progress";
 container.append(h1);
-document.querySelector(".main-preloader-container").append(h1, container);
+document.querySelector(".main-preloader-container").append(h1, container); //<--- по селектору ".main-preloader-container" добавляется данный PRELOADER.
 
 progressInput.addEventListener("input", () => {
   if (animateCheckbox.checked) {
     clearInterval(progressInterval); // Останавливаем интервал
-    progressStartValue = 0; // Сбрасываем значение прогресса
     animateCheckbox.checked = false; // Возвращаем свич на unchecked
 
     circularProgress.style.background = `conic-gradient(#001AFF ${progressInput.value * 3.6}deg, #ededed 0deg)`;
@@ -83,20 +90,25 @@ progressInput.addEventListener("input", () => {
 });
 
 animateCheckbox.addEventListener("change", () => {
+  let progressStartValue = 0;
+  console.log(progressInput.value);
   if (animateCheckbox.checked) {
-    progressInput.value = "";
     progressInterval = setInterval(() => {
       progressStartValue++;
-      circularProgress.style.background = `conic-gradient(#001AFF ${progressStartValue * 3.6}deg, #ededed 0deg)`;
-
-      if (progressStartValue === progressEndValue) {
+      const endAngle = progressStartValue + Number(progressInput.value);
+      circularProgress.style.background = `conic-gradient(
+        #ededed ${progressStartValue * 3.6}deg, 
+        #001AFF ${progressStartValue * 3.6}deg, 
+        #001AFF ${endAngle * 3.6}deg, 
+        #ededed ${endAngle * 3.6}deg,
+        #ededed 360deg)`;
+      if (endAngle === progressEndValue) {
         progressStartValue = 0; // Сбрасываем значение прогресса
-        circularProgress.style.background = `conic-gradient(#001AFF ${progressStartValue * 3.6}deg, #ededed 0deg)`;
       }
     }, speed);
   } else {
     clearInterval(progressInterval); // чекбокс снят, останавливаем интервал
-    progressStartValue = 0; // Сбрасываем значение прогресса
+    endAngle = -Number(progressInput.value); // Сбрасываем значение прогресса
     circularProgress.style.background = `conic-gradient(#001AFF 0deg, #ededed 0deg)`; // Сбрасываем стиль
   }
 });
@@ -105,10 +117,7 @@ hideCheckbox.addEventListener("change", () => {
   if (hideCheckbox.checked) {
     circularProgress.style.opacity = 0;
     clearInterval(progressInterval); // Останавливаем интервал
-    progressStartValue = 0; // Сбрасываем значение прогресса
     animateCheckbox.checked = false; // Возвращаем свич на unchecked
-    progressInput.value = "";
-    circularProgress.style.background = `conic-gradient(#001AFF ${progressInput.value * 3.6}deg, #ededed 0deg)`;
   } else {
     circularProgress.style.opacity = 1;
   }

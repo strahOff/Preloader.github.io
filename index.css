@@ -41,7 +41,7 @@ h1 {
   height: 150px;
   width: 150px;
   border-radius: 50%;
-  background: conic-gradient(#001aff, #ededed 0deg);
+  background: conic-gradient(#001aff 270deg, #ededed 0deg);
   display: flex;
   align-items: center;
   justify-content: center;
