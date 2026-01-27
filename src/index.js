@@ -1,6 +1,6 @@
 let progressInterval = null;
 let progressEndValue = 100,
-  speed = 20;
+  speed = 7;
 
 const container = document.createElement("div");
 container.className = "container";
