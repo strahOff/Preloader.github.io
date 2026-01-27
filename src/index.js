@@ -91,7 +91,6 @@ progressInput.addEventListener("input", () => {
 
 animateCheckbox.addEventListener("change", () => {
   let progressStartValue = 0;
-  console.log(progressInput.value);
   if (animateCheckbox.checked) {
     progressInterval = setInterval(() => {
       progressStartValue++;
