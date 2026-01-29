@@ -103,8 +103,6 @@ animateCheckbox.addEventListener("change", () => {
         #ededed ${endAngle * 3.6}deg)`;
       } else {
         const wrappedEndAngle = endAngle - 100;
-        console.log("wrappedEndAngle", wrappedEndAngle);
-        console.log("progressStartValue", progressStartValue);
         circularProgress.style.background = `conic-gradient(
             #001AFF ${wrappedEndAngle * 3.6}deg, 
             #ededed ${wrappedEndAngle * 3.6}deg, 
