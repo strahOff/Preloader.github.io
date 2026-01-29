@@ -88,9 +88,8 @@ progressInput.addEventListener("input", () => {
     circularProgress.style.background = `conic-gradient(#001AFF ${progressInput.value * 3.6}deg, #ededed 0deg)`;
   }
 });
-
+let progressStartValue = 0;
 animateCheckbox.addEventListener("change", () => {
-  let progressStartValue = 0;
   if (animateCheckbox.checked) {
     progressInterval = setInterval(() => {
       progressStartValue++;
@@ -118,8 +117,11 @@ animateCheckbox.addEventListener("change", () => {
     }, speed);
   } else {
     clearInterval(progressInterval); // чекбокс снят, останавливаем интервал
-    endAngle = -Number(progressInput.value); // Сбрасываем значение прогресса
-    circularProgress.style.background = `conic-gradient(#001AFF 0deg, #ededed 0deg)`; // Сбрасываем стиль
+    circularProgress.style.background = `conic-gradient(
+        #ededed ${progressStartValue * 3.6}deg, 
+        #001AFF ${progressStartValue * 3.6}deg, 
+        #001AFF ${endAngle * 3.6}deg, 
+        #ededed ${endAngle * 3.6}deg)`; // Сбрасываем стиль
   }
 });
 
