@@ -77,10 +77,13 @@ const h1 = document.createElement("h1");
 h1.textContent = "Progress";
 container.append(h1);
 document.querySelector(".main-preloader-container").append(h1, container); //<--- по селектору ".main-preloader-container" добавляется данный PRELOADER.
+let progressStartValue = 0;
+let endAngle = null;
 
-progressInput.addEventListener("input", () => {
+progressInput.addEventListener("input", (event) => {
   if (animateCheckbox.checked) {
     clearInterval(progressInterval); // Останавливаем интервал
+    progressStartValue = 0;
     animateCheckbox.checked = false; // Возвращаем свич на unchecked
 
     circularProgress.style.background = `conic-gradient(#001AFF ${progressInput.value * 3.6}deg, #ededed 0deg)`;
@@ -88,12 +91,12 @@ progressInput.addEventListener("input", () => {
     circularProgress.style.background = `conic-gradient(#001AFF ${progressInput.value * 3.6}deg, #ededed 0deg)`;
   }
 });
-let progressStartValue = 0;
+
 animateCheckbox.addEventListener("change", () => {
   if (animateCheckbox.checked) {
     progressInterval = setInterval(() => {
       progressStartValue++;
-      const endAngle = progressStartValue + Number(progressInput.value);
+      endAngle = progressStartValue + Number(progressInput.value);
 
       if (endAngle * 3.6 <= 360) {
         circularProgress.style.background = `conic-gradient(
