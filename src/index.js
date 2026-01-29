@@ -126,8 +126,6 @@ animateCheckbox.addEventListener("change", () => {
 hideCheckbox.addEventListener("change", () => {
   if (hideCheckbox.checked) {
     circularProgress.style.opacity = 0;
-    clearInterval(progressInterval); // Останавливаем интервал
-    animateCheckbox.checked = false; // Возвращаем свич на unchecked
   } else {
     circularProgress.style.opacity = 1;
   }
