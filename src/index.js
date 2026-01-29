@@ -1,6 +1,6 @@
 let progressInterval = null;
 let progressEndValue = 100,
-  speed = 7;
+  speed = 20;
 
 const container = document.createElement("div");
 container.className = "container";
@@ -95,13 +95,24 @@ animateCheckbox.addEventListener("change", () => {
     progressInterval = setInterval(() => {
       progressStartValue++;
       const endAngle = progressStartValue + Number(progressInput.value);
-      circularProgress.style.background = `conic-gradient(
+
+      if (endAngle * 3.6 <= 360) {
+        circularProgress.style.background = `conic-gradient(
         #ededed ${progressStartValue * 3.6}deg, 
         #001AFF ${progressStartValue * 3.6}deg, 
         #001AFF ${endAngle * 3.6}deg, 
-        #ededed ${endAngle * 3.6}deg,
-        #ededed 360deg)`;
-      if (endAngle === progressEndValue) {
+        #ededed ${endAngle * 3.6}deg)`;
+      } else {
+        const wrappedEndAngle = endAngle - 100;
+        console.log("wrappedEndAngle", wrappedEndAngle);
+        console.log("progressStartValue", progressStartValue);
+        circularProgress.style.background = `conic-gradient(
+            #001AFF ${wrappedEndAngle * 3.6}deg, 
+            #ededed ${wrappedEndAngle * 3.6}deg, 
+            #ededed ${progressStartValue * 3.6}deg, 
+            #001AFF ${progressStartValue * 3.6}deg)`;
+      }
+      if (endAngle === progressEndValue + Number(progressInput.value)) {
         progressStartValue = 0; // Сбрасываем значение прогресса
       }
     }, speed);
